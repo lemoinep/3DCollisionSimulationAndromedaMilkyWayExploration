@@ -112,7 +112,7 @@ galaxy1 = Galaxy(
     center_mass=m31_mass,
     center_pos=[-sep/2, 0, 0],
     center_vel=[0, 0, 0],
-    n_stars=500,  # fewer stars for speed and clarity
+    n_stars=1000,  # fewer stars for speed and clarity
     radius=m31_radius,
     inclination_deg=77,
     inclination_axis=[1,0,0]
@@ -121,18 +121,20 @@ galaxy2 = Galaxy(
     center_mass=mw_mass,
     center_pos=[sep/2, 0, 0],
     center_vel=[0, 0, 0],
-    n_stars=500,
-    radius=mw_radius
+    n_stars=1000,
+    radius=mw_radius,
+    inclination_deg=0,
+    inclination_axis=[1,0,0]
 )
 
-dt = 0.2   # Myr per step (smaller for stability)
+dt = 0.05   # Myr per step (smaller for stability)
 steps = 600  # Number of simulation steps
 
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.set_xlim(-500, 500)
 ax.set_ylim(-500, 500)
-ax.set_zlim(-100, 100)
+ax.set_zlim(-500, 500)
 ax.set_xlabel('X [kpc]')
 ax.set_ylabel('Y [kpc]')
 ax.set_zlabel('Z [kpc]')

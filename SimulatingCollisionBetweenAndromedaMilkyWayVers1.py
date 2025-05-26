@@ -5,11 +5,39 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
+
+
+# --- Physical constants and unit conversions ---
+G_phys = 6.67430e-11  # m^3 kg^-1 s^-2
+Msun = 1.989e30       # kg
+kpc = 3.086e19        # m
+Myr = 3.154e13        # s
+
+# Gravitational constant in kpc^3 / (Msun * Myr^2)
+G = G_phys * (Msun**-1) * (kpc**3) * (Myr**-2)
+
 G = 1.0  # Gravitational constant in arbitrary units
 # Note: Units are normalized for simplicity; real astrophysical units require proper scaling.
 
+
+def rotate_3d(vecs, axis, angle_deg):
+    angle = np.deg2rad(angle_deg)
+    axis = np.asarray(axis)
+    axis = axis / np.linalg.norm(axis)
+    ux, uy, uz = axis
+    cos_a = np.cos(angle)
+    sin_a = np.sin(angle)
+    R = np.array([
+        [cos_a + ux**2 * (1 - cos_a),      ux*uy*(1-cos_a) - uz*sin_a, ux*uz*(1-cos_a) + uy*sin_a],
+        [uy*ux*(1-cos_a) + uz*sin_a, cos_a + uy**2*(1-cos_a),      uy*uz*(1-cos_a) - ux*sin_a],
+        [uz*ux*(1-cos_a) - uy*sin_a, uz*uy*(1-cos_a) + ux*sin_a, cos_a + uz**2*(1-cos_a)]
+    ])
+    return vecs @ R.T
+
+
+
 class Galaxy:
-    def __init__(self, center_mass, center_pos, center_vel, n_stars, radius):
+    def __init__(self, center_mass, center_pos, center_vel, n_stars, radius, inclination_deg=0, inclination_axis=[1,0,0]):
         """
         Initialize a galaxy model consisting of a massive central core and orbiting stars.
 
@@ -32,6 +60,9 @@ class Galaxy:
         # This assumes the total stellar mass is roughly equal to the central mass, 
         # which is a simplification.
         self.star_mass = center_mass / n_stars
+        
+        self.inclination_deg = inclination_deg
+        self.inclination_axis = inclination_axis
         
         self.stars_pos = []
         self.stars_vel = []
@@ -64,7 +95,8 @@ class Galaxy:
             # Convert polar to Cartesian coordinates in disk plane
             x = r * np.cos(theta)
             y = r * np.sin(theta)
-            pos = self.center_pos + np.array([x, y, z])
+            #pos = self.center_pos + np.array([x, y, z])
+            pos = np.array([x, y, z])
 
             # Calculate circular orbital velocity magnitude (Keplerian approximation)
             if r > 1e-5:
@@ -85,9 +117,19 @@ class Galaxy:
 
             self.stars_pos.append(pos)
             self.stars_vel.append(vel)
+            
+        pos_arr = np.array(self.stars_pos)
+        vel_arr = np.array(self.stars_vel)
+        if self.inclination_deg != 0:
+            pos_arr = rotate_3d(pos_arr, self.inclination_axis, self.inclination_deg)
+            vel_arr = rotate_3d(vel_arr, self.inclination_axis, self.inclination_deg)
+            
 
-        self.stars_pos = np.array(self.stars_pos)
-        self.stars_vel = np.array(self.stars_vel)
+        #self.stars_pos = np.array(self.stars_pos)
+        #self.stars_vel = np.array(self.stars_vel)
+        
+        self.stars_pos = self.center_pos + pos_arr
+        self.stars_vel = self.center_vel + vel_arr
 
 def compute_gravity(pos1, mass1, pos2, mass2):
     """
@@ -169,18 +211,33 @@ def update_simulation(gal1, gal2, dt):
 # Milky Way mass ~1e6
 # Note: Masses can be tuned; here Milky Way is more massive but smaller radius to illustrate dynamics.
 
-galaxy1 = Galaxy(center_mass=4.5e5, center_pos=[-150, 0, 0], center_vel=[0, 0.4, 0], n_stars=2000, radius=44)  # Andromeda
-galaxy2 = Galaxy(center_mass=1e6, center_pos=[150, 0, 0], center_vel=[0, -0.4, 0], n_stars=2000, radius=20)   # Milky Way
+galaxy1 = Galaxy(
+    center_mass=4.5e5, 
+    center_pos=[-150, 0, 0], 
+    center_vel=[0, 0.4, 0], 
+    n_stars=1000, 
+    radius=44,
+    inclination_deg=77,
+    inclination_axis=[1,0,0])  # Andromeda
 
-dt = 0.01  # Time step for numerical integration
-steps = 200  # Number of simulation steps
+galaxy2 = Galaxy(
+    center_mass=1e6, 
+    center_pos=[150, 0, 0], 
+    center_vel=[0, -0.4, 0], 
+    n_stars=1000, 
+    radius=20,
+    inclination_deg=0,
+    inclination_axis=[1,0,0])   # Milky Way
+
+dt = 0.005  # Time step for numerical integration
+steps = 10000  # Number of simulation steps
 
 # Setup 3D plot for visualization
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 ax.set_xlim(-200, 200)
 ax.set_ylim(-200, 200)
-ax.set_zlim(-60, 60)
+ax.set_zlim(-200, 200)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
