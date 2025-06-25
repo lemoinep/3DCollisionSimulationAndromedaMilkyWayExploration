@@ -16,11 +16,7 @@ Simulations of this collision—like the one presented here—model the complex 
 
 - **Galaxy Modeling**: Simplified as a massive central core plus many stars orbiting in a disk.
 - **Star Distribution**: Uniform surface density in the disk plane with small vertical thickness to mimic real spiral galaxies.
-- **Orbital Velocities**: Calculated assuming stars orbit a point mass (central core) with circular velocity \( v = \sqrt{GM/r} \).
-- **Gravitational Interactions**: Stars feel gravity from both galactic centers; stars do not interact mutually (collisionless approximation).
-- **Numerical Integration**: Euler method updates positions and velocities each timestep; simple but may require small \( dt \) for stability.
-- **Units**: Arbitrary units used for demonstration; real simulations require astrophysical units and scaling.
-- **Galaxy Sizes and Masses**: Andromeda is modeled with a larger disk radius than the Milky Way to reflect astrophysical observations.
+- **Orbital Velocities**: Calculated assuming stars orbit a point mass (central core) with circular velocity.
 
 ## Physical and Mechanical Equations of the Andromeda-Milky Way Collision
 
@@ -28,31 +24,31 @@ Simulations of this collision—like the one presented here—model the complex 
 
 The gravitational force between two point masses, such as the central cores of the galaxies, can be described by Newton's law of universal gravitation:
 
-\[ F = G \frac{m_1 m_2}{r^2} \]
+$$F = G rac{m_1 m_2}{r^2}$$
 
 where:
-- \( F \) is the gravitational force between the masses,
-- \( G \) is the gravitational constant (\(6.67430 \times 10^{-11} \, \text{m}^3 \text{kg}^{-1} \text{s}^{-2}\)),
-- \( m_1 \) and \( m_2 \) are the masses of the two objects,
-- \( r \) is the distance between the centers of the two masses.
+- $F$ is the gravitational force between the masses,
+- $G$ is the gravitational constant ($6.67430 	imes 10^{-11} \, 	ext{m}^3 	ext{kg}^{-1} 	ext{s}^{-2}$),
+- $m_1$ and $m_2$ are the masses of the two objects,
+- $r$ is the distance between the centers of the two masses.
 
 ### Orbital Velocity
 
 The orbital velocity of stars within a galaxy can be approximated using the circular velocity formula derived from the balance between gravitational force and centripetal acceleration:
 
-\[ v = \sqrt{\frac{GM}{r}} \]
+$$v = \sqrt{rac{GM}{r}}$$
 
 where:
-- \( v \) is the orbital velocity of a star,
-- \( G \) is the gravitational constant,
-- \( M \) is the mass of the galactic core,
-- \( r \) is the distance from the star to the galactic center.
+- $v$ is the orbital velocity of a star,
+- $G$ is the gravitational constant,
+- $M$ is the mass of the galactic core,
+- $r$ is the distance from the star to the galactic center.
 
 ### Potential Energy
 
-The gravitational potential energy between two galaxies can be expressed as:
+The gravitational potential energy between two galaxies can be expressed as
 
-\[ U = -G \frac{m_1 m_2}{r} \]
+$$U = -G rac{m_1 m_2}{r}$$
 
 This equation gives the potential energy of the system, which is crucial for understanding the energy dynamics during the collision.
 
@@ -62,21 +58,21 @@ The dynamics of the collision can be modeled using the principles of conservatio
 
 - **Conservation of Momentum:**
 
-\[ m_1 \vec{v}_1 + m_2 \vec{v}_2 = \text{constant} \]
+$$m_1 ec{v}_1 + m_2 ec{v}_2 = 	ext{constant}$$
 
 - **Conservation of Energy:**
 
-\[ \frac{1}{2} m_1 v_1^2 + \frac{1}{2} m_2 v_2^2 - G \frac{m_1 m_2}{r} = \text{constant} \]
+$$rac{1}{2} m_1 v_1^2 + rac{1}{2} m_2 v_2^2 - G rac{m_1 m_2}{r} = 	ext{constant}$$
 
 ### Tidal Forces
 
 Tidal forces play a significant role in distorting the shapes of the galaxies. The tidal force on a star in one galaxy due to the gravitational pull of the other galaxy can be approximated by:
 
-\[ F_{\text{tidal}} \approx \frac{2GMd}{r^3} \]
+$$F_{	ext{tidal}} pprox rac{2GMd}{r^3}$$
 
 where:
-- \( d \) is the diameter of the star's orbit around its galaxy,
-- \( r \) is the distance between the two galaxies.
+- $d$ is the diameter of the star's orbit around its galaxy,
+- $r$ is the distance between the two galaxies.
 
 ### Simulation and Numerical Methods
 
@@ -84,17 +80,17 @@ In simulations, the Euler method is often used for numerical integration to upda
 
 - **Position Update:**
 
-\[ \vec{r}(t + \Delta t) = \vec{r}(t) + \vec{v}(t) \Delta t \]
+$$ec{r}(t + \Delta t) = ec{r}(t) + ec{v}(t) \Delta t$$
 
 - **Velocity Update:**
 
-\[ \vec{v}(t + \Delta t) = \vec{v}(t) + \vec{a}(t) \Delta t \]
+$$ec{v}(t + \Delta t) = ec{v}(t) + ec{a}(t) \Delta t$$
 
 where:
-- \( \vec{r} \) is the position vector,
-- \( \vec{v} \) is the velocity vector,
-- \( \vec{a} \) is the acceleration vector,
-- \( \Delta t \) is the time step.
+- $ec{r}$ is the position vector,
+- $ec{v}$ is the velocity vector,
+- $ec{a}$ is the acceleration vector,
+- $\Delta t$ is the time step.
 
 ## Computational Aspects of the Simulation
 
