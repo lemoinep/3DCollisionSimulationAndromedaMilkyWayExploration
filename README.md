@@ -58,7 +58,7 @@ The dynamics of the collision can be modeled using the principles of conservatio
 
 - **Conservation of Momentum:**
 
-$$m_1 Vec{v}_1 + m_2 Vec{v}_2 = 	ext{constant}$$
+$$m_1 vec{v}_1 + m_2 vec{v}_2 = 	ext{constant}$$
 
 - **Conservation of Energy:**
 
@@ -80,16 +80,16 @@ In simulations, the Euler method is often used for numerical integration to upda
 
 - **Position Update:**
 
-$$Vec{r}(t + \Delta t) = Vec{r}(t) + Vec{v}(t) \Delta t$$
+$$vec{r}(t + \Delta t) = vec{r}(t) + vec{v}(t) \Delta t$$
 
 - **Velocity Update:**
 
-$$Vec{v}(t + \Delta t) = Vec{v}(t) + Vec{a}(t) \Delta t$$
+$$vec{v}(t + \Delta t) = vec{v}(t) + vec{a}(t) \Delta t$$
 
 where:
-- $Vec{r}$ is the position vector,
-- $Vec{v}$ is the velocity vector,
-- $Vec{a}$ is the acceleration vector,
+- $vec{r}$ is the position vector,
+- $vec{v}$ is the velocity vector,
+- $vec{a}$ is the acceleration vector,
 - $\Delta t$ is the time step.
 
 ## Computational Aspects of the Simulation
