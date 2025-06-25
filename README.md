@@ -102,12 +102,13 @@ $$
 \\vec{v}(t + \\Delta t) = \\vec{v}(t) + \\vec{a}(t) \\Delta t
 $$
 
+$$
 where:
 - \(\vec{r}\) is the position vector,
 - \(\vec{v}\) is the velocity vector,
 - \(\vec{a}\) is the acceleration vector,
 - \(\Delta t\) is the time step.
-
+$$
 
 ## Computational Aspects of the Simulation
 
