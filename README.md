@@ -1,5 +1,7 @@
 # Simulation of the Andromeda-Milky Way Collision
 
+<img src="Images/P0001.jpg" width="75%" />
+
 ## Objective
 
 My objective is to explore various concepts in physics by formulating problems mathematically and conducting simulations. This approach will yield many interesting and valuable insights.
